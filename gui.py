@@ -19,132 +19,426 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Blue Gradient Theme CSS
+# Matrix Green Terminal Theme CSS
 st.markdown("""
 <style>
-    /* Main background gradient */
+    /* Main background with subtle matrix grid */
     .stApp {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: #0a0a0a;
+        background-image: 
+            radial-gradient(#003300 0.5px, transparent 0.5px),
+            radial-gradient(#003300 0.5px, #0a0a0a 0.5px);
+        background-size: 20px 20px;
+        background-position: 0 0, 10px 10px;
+        color: #00ff41;
+        font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+        min-height: 100vh;
     }
     
-    /* Content containers */
+    /* Content containers - ensure visibility */
     .main-container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 15px;
+        background: rgba(5, 15, 5, 0.98);
+        border-radius: 0px;
         padding: 2rem;
         margin: 1rem;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 
+            0 0 25px rgba(0, 255, 65, 0.4),
+            inset 0 0 20px rgba(0, 255, 65, 0.1);
+        border: 2px solid #00ff41;
+        backdrop-filter: blur(5px);
+        position: relative;
+        z-index: 1;
     }
     
-    /* Header styling */
+    /* Header styling - matrix green with strong glow */
     .main-header {
         font-size: 2.8rem;
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: #00ff41;
         text-align: center;
         margin-bottom: 0.5rem;
         font-weight: 700;
+        text-shadow: 
+            0 0 10px #00ff41,
+            0 0 20px #00ff41,
+            0 0 30px #00ff41;
+        font-family: 'Courier New', monospace;
+        letter-spacing: 3px;
+        background: rgba(0, 25, 0, 0.9);
+        padding: 1.5rem;
+        border: 2px solid #00ff41;
+        position: relative;
+        animation: text-flicker 3s infinite alternate;
+    }
+    
+    @keyframes text-flicker {
+        0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+            opacity: 1;
+            text-shadow: 
+                0 0 10px #00ff41,
+                0 0 20px #00ff41,
+                0 0 30px #00ff41;
+        }
+        20%, 24%, 55% {
+            opacity: 0.9;
+            text-shadow: 
+                0 0 5px #00ff41,
+                0 0 10px #00ff41;
+        }
     }
     
     .main-subheader {
         text-align: center;
-        color: #6c757d;
+        color: #00ff88;
         margin-bottom: 2rem;
+        font-size: 1.2rem;
+        background: rgba(0, 30, 0, 0.8);
+        padding: 1rem;
+        border: 1px solid #00ff88;
+        font-family: 'Courier New', monospace;
+        text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+    }
+    
+    /* Section headers - high visibility */
+    .section-header {
+        color: #00ff41;
+        border-bottom: 3px solid #00ff41;
+        padding-bottom: 0.8rem;
+        margin-bottom: 1.5rem;
+        font-weight: 700;
+        text-shadow: 0 0 10px #00ff41;
+        font-family: 'Courier New', monospace;
+        background: rgba(0, 30, 0, 0.7);
+        padding: 1.2rem;
+        margin-top: 1rem;
+        font-size: 1.5rem;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    }
+    
+    /* Form containers - ensure readability */
+    .form-container {
+        background: rgba(0, 35, 0, 0.9);
+        border-radius: 0px;
+        padding: 1.8rem;
+        margin-bottom: 1.5rem;
+        border-left: 5px solid #00ff41;
+        border-top: 1px solid #00aa00;
+        border-right: 1px solid #00aa00;
+        border-bottom: 1px solid #00aa00;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        position: relative;
+        z-index: 1;
+    }
+    
+    /* Buttons - matrix style */
+    .stButton button {
+        background: #002200;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41;
+        border-radius: 0px;
+        padding: 0.8rem 2rem;
+        font-weight: 700;
+        font-family: 'Courier New', monospace;
+        transition: all 0.3s ease;
+        text-shadow: 0 0 8px #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.4);
+        position: relative;
+        overflow: hidden;
         font-size: 1.1rem;
     }
     
-    /* Section headers */
-    .section-header {
-        color: #495057;
-        border-bottom: 2px solid #667eea;
-        padding-bottom: 0.5rem;
-        margin-bottom: 1.5rem;
-        font-weight: 600;
-    }
-    
-    /* Form containers */
-    .form-container {
-        background: rgba(248, 249, 250, 0.8);
-        border-radius: 10px;
-        padding: 1.5rem;
-        margin-bottom: 1rem;
-        border-left: 4px solid #667eea;
-    }
-    
-    /* Buttons */
-    .stButton button {
-        background: linear-gradient(45deg, #667eea, #764ba2);
-        color: white;
-        border: none;
-        border-radius: 8px;
-        padding: 0.5rem 1rem;
-        font-weight: 500;
-        transition: all 0.3s ease;
-    }
-    
     .stButton button:hover {
+        background: #004400;
+        box-shadow: 
+            0 0 20px #00ff41,
+            0 0 30px rgba(0, 255, 65, 0.6);
         transform: translateY(-2px);
-        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        border-color: #00ff88;
     }
     
-    /* Success boxes */
+    /* Input fields - ensure visibility */
+    .stTextInput input {
+        background: #001a00 !important;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41 !important;
+        border-radius: 0px !important;
+        padding: 0.8rem !important;
+        font-family: 'Courier New', monospace !important;
+        font-size: 1.1rem !important;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.3) inset;
+    }
+    
+    .stTextInput input:focus {
+        box-shadow: 
+            0 0 15px #00ff41,
+            0 0 25px rgba(0, 255, 65, 0.4) inset;
+        background: #003300 !important;
+        border-color: #00ff88 !important;
+    }
+    
+    /* Select boxes */
+    .stSelectbox select {
+        background: #001a00 !important;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41 !important;
+        border-radius: 0px !important;
+        padding: 0.8rem !important;
+        font-family: 'Courier New', monospace !important;
+        font-size: 1.1rem !important;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.3) inset;
+    }
+    
+    /* Text areas */
+    .stTextArea textarea {
+        background: #001a00 !important;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41 !important;
+        border-radius: 0px !important;
+        font-family: 'Courier New', monospace !important;
+        font-size: 1.1rem !important;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.3) inset;
+        line-height: 1.6;
+    }
+    
+    /* Checkboxes and radio buttons */
+    .stCheckbox, .stRadio {
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace !important;
+    }
+    
+    .stCheckbox > div, .stRadio > div {
+        background: rgba(0, 30, 0, 0.8) !important;
+        border: 1px solid #00ff41 !important;
+        border-radius: 0px !important;
+        padding: 1rem !important;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.2) inset !important;
+        color: #00ff41 !important;
+    }
+    
+    /* Success boxes - high contrast */
     .success-box {
-        background: linear-gradient(45deg, #d4edda, #c3e6cb);
-        color: #155724;
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid #c3e6cb;
-        margin: 1rem 0;
+        background: rgba(0, 50, 0, 0.95);
+        color: #00ff41;
+        padding: 1.5rem;
+        border-radius: 0px;
+        border: 2px solid #00ff41;
+        margin: 1.5rem 0;
+        box-shadow: 0 0 25px rgba(0, 255, 65, 0.5);
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-shadow: 0 0 5px #00ff41;
     }
     
     /* Info boxes */
     .info-box {
-        background: linear-gradient(45deg, #d1ecf1, #bee5eb);
-        color: #0c5460;
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid #bee5eb;
-        margin: 1rem 0;
+        background: rgba(0, 35, 20, 0.95);
+        color: #00ff99;
+        padding: 1.5rem;
+        border-radius: 0px;
+        border: 2px solid #00ff99;
+        margin: 1.5rem 0;
+        box-shadow: 0 0 25px rgba(0, 255, 153, 0.4);
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-shadow: 0 0 5px #00ff99;
     }
     
     /* Warning boxes */
     .warning-box {
-        background: linear-gradient(45deg, #fff3cd, #ffeaa7);
-        color: #856404;
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid #ffeaa7;
-        margin: 1rem 0;
+        background: rgba(50, 50, 0, 0.95);
+        color: #ffff00;
+        padding: 1.5rem;
+        border-radius: 0px;
+        border: 2px solid #ffff00;
+        margin: 1.5rem 0;
+        box-shadow: 0 0 25px rgba(255, 255, 0, 0.4);
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        line-height: 1.6;
+        text-shadow: 0 0 5px #ffff00;
     }
     
-    /* Vertical divider */
-    .vertical-divider {
-        border-left: 2px solid #dee2e6;
-        height: 100%;
-        margin: 0 2rem;
-    }
-    
-    /* Compact form elements */
-    .compact-input {
-        margin-bottom: 0.5rem;
-    }
-    
-    /* Progress bar styling */
+    /* Progress bars */
     .stProgress > div > div > div {
-        background: linear-gradient(45deg, #667eea, #764ba2);
+        background: linear-gradient(90deg, #00ff41, #00ff88);
+        box-shadow: 0 0 15px #00ff41;
+    }
+    
+    .stProgress > div > div {
+        background: #001100;
+        border: 2px solid #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) inset;
     }
     
     /* Metric cards */
     .metric-card {
-        background: white;
-        border-radius: 8px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        border-left: 4px solid #667eea;
+        background: rgba(0, 30, 0, 0.95);
+        border-radius: 0px;
+        padding: 1.5rem;
+        margin: 0.8rem 0;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        border-left: 5px solid #00ff41;
+        border-top: 1px solid #00aa00;
+        border-right: 1px solid #00aa00;
+        border-bottom: 1px solid #00aa00;
+        color: #00ff41;
+        font-family: 'Courier New', monospace;
+        font-size: 1.2rem;
+        font-weight: bold;
+        position: relative;
+        text-shadow: 0 0 5px #00ff41;
+    }
+    
+    /* Vertical divider */
+    .vertical-divider {
+        border-left: 3px solid #00ff41;
+        height: 100%;
+        margin: 0 2rem;
+        box-shadow: 0 0 15px #00ff41;
+    }
+    
+    /* Dataframes - readable matrix style */
+    .dataframe {
+        background: #001a00 !important;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41 !important;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        font-family: 'Courier New', monospace !important;
+    }
+    
+    .dataframe th {
+        background: #003300 !important;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41 !important;
+        font-weight: bold;
+        text-shadow: 0 0 8px #00ff41;
+        padding: 1rem !important;
+        font-size: 1.1rem;
+    }
+    
+    .dataframe td {
+        background: #001a00 !important;
+        color: #00ff41 !important;
+        border: 1px solid #005500 !important;
+        padding: 0.8rem !important;
+        font-size: 1rem;
+    }
+    
+    /* File uploader */
+    .stFileUploader > div {
+        background: rgba(0, 30, 0, 0.9) !important;
+        border: 2px dashed #00ff41 !important;
+        border-radius: 0px !important;
+        color: #00ff41 !important;
+    }
+    
+    /* Expanders */
+    .streamlit-expanderHeader {
+        background: rgba(0, 40, 0, 0.95) !important;
+        color: #00ff41 !important;
+        border: 2px solid #00ff41 !important;
+        font-family: 'Courier New', monospace !important;
+        font-weight: bold;
+        text-shadow: 0 0 8px #00ff41;
+        font-size: 1.1rem;
+    }
+    
+    .streamlit-expanderContent {
+        background: rgba(0, 25, 0, 0.9) !important;
+        border: 1px solid #003300 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace !important;
+    }
+    
+    /* Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        background: #001100;
+        border-bottom: 3px solid #00ff41;
+        box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+    }
+    
+    .stTabs [data-baseweb="tab"] {
+        color: #00cc33;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    
+    .stTabs [aria-selected="true"] {
+        color: #00ff41 !important;
+        background: rgba(0, 255, 65, 0.15);
+        text-shadow: 0 0 10px #00ff41;
+        border-bottom: 3px solid #00ff41;
+    }
+    
+    /* Markdown text - ensure readability */
+    .stMarkdown {
+        color: #00ff41;
+        font-family: 'Courier New', monospace;
+        line-height: 1.7;
+        font-size: 1.05rem;
+    }
+    
+    .stMarkdown strong {
+        color: #00ff88;
+        text-shadow: 0 0 8px #00ff88;
+    }
+    
+    /* Code blocks */
+    .stCodeBlock {
+        background: #001100 !important;
+        border: 2px solid #00ff41 !important;
+        border-radius: 0px !important;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace !important;
+        font-size: 1rem;
+    }
+    
+    /* Ensure all text is visible with proper contrast */
+    * {
+        text-shadow: 0 0 2px rgba(0, 255, 65, 0.7);
+    }
+    
+    /* Labels and titles */
+    label {
+        color: #00ff88 !important;
+        font-weight: bold !important;
+        text-shadow: 0 0 5px #00ff88;
+    }
+    
+    /* Sidebar styling */
+    .css-1d391kg, .css-1lcbm6i {
+        background: #0a0a0a !important;
+        border-right: 2px solid #00ff41;
+        box-shadow: 0 0 25px rgba(0, 255, 65, 0.3);
+    }
+    
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+        background: #001100;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background: #00ff41;
+        box-shadow: 0 0 15px #00ff41;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background: #00ff88;
+    }
+    
+    /* Error messages */
+    .stAlert {
+        background: rgba(50, 0, 0, 0.95) !important;
+        border: 2px solid #ff4444 !important;
+        color: #ff4444 !important;
+        text-shadow: 0 0 8px #ff4444;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -168,10 +462,10 @@ def clear_all():
 def exit_app():
     """Exit the application"""
     st.markdown("""
-    <div style="background: linear-gradient(45deg, #f8d7da, #f5c6cb); color: #721c24; padding: 1rem; border-radius: 8px; border: 1px solid #f5c6cb; margin: 1rem 0;">
-        <h3>🚪 Exiting Application</h3>
-        <p>Thank you for using Wordlist Generator!</p>
-        <p>This window will close automatically.</p>
+    <div style="background: rgba(50, 0, 0, 0.95); color: #ff4444; padding: 1.5rem; border-radius: 0px; border: 2px solid #ff4444; margin: 1.5rem 0; box-shadow: 0 0 25px rgba(255, 68, 68, 0.4);">
+        <h3 style='color: #ff4444; text-shadow: 0 0 10px #ff4444;'>🚪 Exiting Application</h3>
+        <p style='color: #ff4444;'>Thank you for using Wordlist Generator!</p>
+        <p style='color: #ff4444;'>This window will close automatically.</p>
     </div>
     """, unsafe_allow_html=True)
     time.sleep(3)
@@ -405,7 +699,7 @@ def main():
             st.markdown('<div class="form-container">', unsafe_allow_html=True)
             st.markdown("**📁 Drop Your Wordlist File Here**")
             uploaded_file = st.file_uploader(
-                "Choose a wordlist file", 
+                "Choose a wordlist file",
                 type=['txt'],
                 help="Upload a .txt file with one word per line",
                 label_visibility="collapsed"
@@ -466,6 +760,7 @@ def main():
                                 # Download report
                                 st.markdown("**📥 Download Analysis Report**")
                                 report_content = f"""Wordlist Duplicate Analysis Report
+
 Generated: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
 File: {uploaded_file.name}
 
